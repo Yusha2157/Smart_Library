@@ -1,29 +1,20 @@
 const express = require('express');
 const Router = express.Router();
+const AuthController = require('../controllers/AuthController');
 
 // @name  -  RegisterUser
 // @route -  POST /api/newUser
-// @desc - Register new user and assign the role of either admin or borrower to them
-
-Router.route('/newUser').post((req , res) => {
-    res.json({message : "User registration Working"});
-})
-
+// @desc  -  Register new user
+Router.route('/newUser').post(AuthController.register);
 
 // @name  -  loginUser
 // @route -  POST /api/loginUser
-// @desc - login user and assign the role of either admin or borrower to them
-
-Router.route('/loginUser').post((req , res) => {
-    res.json({message : "User login working"});
-})
+// @desc  -  Login user
+Router.route('/loginUser').post(AuthController.login);
 
 // @name  -  userInfo
-// @route -  Get /api/me
-// @desc - Fetch the information of the logged in User and display it to them
-
-Router.route('/me').get((req , res) => {
-    res.json({message : "User Information"});
-})
+// @route -  GET /api/me
+// @desc  -  Fetch info of logged-in user
+Router.route('/me').get(AuthController.verifyToken, AuthController.getCurrentUser);
 
 module.exports = Router;
